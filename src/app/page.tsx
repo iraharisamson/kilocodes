@@ -1,10 +1,10 @@
 const chapters = [
-  { id: "intro", title: "Introduction to Pharmacognosy", desc: "Learn the fundamentals", icon: "📚", locked: false },
-  { id: "primary", title: "Primary Plant Metabolites", desc: "Essential compounds", icon: "🌿", locked: true },
-  { id: "secondary", title: "Secondary Plant Metabolites", desc: "Bioactive compounds", icon: "🔬", locked: true },
-  { id: "natural-drugs", title: "Drugs from Natural Sources", desc: "Medicinal plants", icon: "💊", locked: true },
-  { id: "techniques", title: "Phytochemistry Techniques", desc: "Methods for studying", icon: "⚗️", locked: true },
-  { id: "quality", title: "Quality Control of Herbal Drugs", desc: "Ensuring drug quality", icon: "✓", locked: true },
+  { id: "intro", title: "Introduction to Pharmacognosy", desc: "Learn the fundamentals", icon: "📚" },
+  { id: "primary", title: "Primary Plant Metabolites", desc: "Essential compounds", icon: "🌿" },
+  { id: "secondary", title: "Secondary Plant Metabolites", desc: "Bioactive compounds", icon: "🔬" },
+  { id: "natural-drugs", title: "Drugs from Natural Sources", desc: "Medicinal plants", icon: "💊" },
+  { id: "techniques", title: "Phytochemistry Techniques", desc: "Methods for studying", icon: "⚗️" },
+  { id: "quality", title: "Quality Control of Herbal Drugs", desc: "Ensuring drug quality", icon: "✓" },
 ];
 
 export default function Home() {
@@ -30,9 +30,7 @@ export default function Home() {
           {chapters.map((chapter) => (
             <div
               key={chapter.id}
-              className={`border-2 border-[#E5E5E5] rounded-2xl p-4 flex items-center gap-4 bg-white cursor-pointer transition-colors ${
-                chapter.locked ? "opacity-50 cursor-not-allowed" : "hover:border-[#58CC02]"
-              }`}
+              className="border-2 border-[#E5E5E5] rounded-2xl p-4 flex items-center gap-4 bg-white cursor-pointer transition-colors hover:border-[#58CC02]"
             >
               <div className="w-[60px] h-[60px] rounded-xl bg-[#D7F5D7] flex items-center justify-center text-[28px]">
                 {chapter.icon}
