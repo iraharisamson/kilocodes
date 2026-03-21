@@ -46,63 +46,60 @@ const phaseColors: Record<string, string> = {
   I: "from-pink-500 to-rose-400",
 };
 
-const quizzes: Record<string, { question: string; options: string[]; correct: number }[]> = {
-  ch1: Array.from({ length: 50 }, (_, i) => {
-    const q = [
-      { question: "Who is known as the father of modern Pharmacognosy?", options: ["Johann Christian Stark", "Karl P. Wright", "William C. Evans", "Varro E. Tyler"], correct: 0 },
-      { question: "Pharmacognosy is the study of:", options: ["Synthetic drugs", "Natural drugs from plants, animals and minerals", "Only pharmaceutical formulations", "Drug manufacturing processes"], correct: 1 },
-      { question: "Which ancient civilization first used herbal medicines systematically?", options: ["Greek", "Roman", "Egyptians and Mesopotamians", "Chinese only"], correct: 2 },
-      { question: "The term 'Pharmacognosy' was first used by:", options: ["Seydler", "Dioscorides", "Hippocrates", "Galan"], correct: 0 },
-      { question: "Who wrote 'De Materia Medica'?", options: ["Hippocrates", "Dioscorides", "Galen", "Avicenna"], correct: 1 },
-      { question: "The main sources of natural drugs include:", options: ["Only plants", "Plants, animals and minerals", "Only synthetic compounds", "Only minerals"], correct: 1 },
-      { question: "Crude drugs are:", options: ["Pure chemical compounds", "Raw natural materials", "Finished formulations", "Synthetic medicines"], correct: 1 },
-      { question: "Pharmacognosy deals with:", options: ["Drug design", "Identification, cultivation and preparation of natural drugs", "Drug marketing", "Clinical trials"], correct: 1 },
-      { question: "Which Greek physician is known as father of medicine?", options: ["Aristotle", "Hippocrates", "Socrates", "Plato"], correct: 1 },
-      { question: "Egypt contributed significantly to pharmacognosy through:", options: ["Development of synthetics", "Papyrus Ebers", "DNA technology", "Modern chromatography"], correct: 1 },
-      { question: "Ethnobotany is the study of:", options: ["Drug synthesis", "Relationship between plants and humans", "Plant genetics", "Plant pathology"], correct: 1 },
-      { question: "Ethnopharmacology studies:", options: ["Animal drugs only", "Traditional medicine systems", "Synthetic drugs", "Drug pricing"], correct: 1 },
-      { question: "Which is NOT a traditional system of medicine?", options: ["Ayurveda", "Unani", "Allopathy", "Homeopathy"], correct: 2 },
-      { question: "Ayurveda originated in:", options: ["Greece", "India", "China", "Persia"], correct: 1 },
-      { question: "The Unani system originated in:", options: ["India", "Greece", "China", "Egypt"], correct: 1 },
-      { question: "Pharmacognosy differs from pharmacology in that it studies:", options: ["Drug toxicity only", "Natural drug sources and characteristics", "Drug metabolism", "Drug synthesis"], correct: 1 },
-      { question: "Primary metabolites in plants include:", options: ["Alkaloids", "Carbohydrates, proteins and lipids", "Terpenes", "Phenolics"], correct: 1 },
-      { question: "Secondary metabolites in plants include:", options: ["Glucose", "Alkaloids and terpenes", "Amino acids", "Fatty acids"], correct: 1 },
-      { question: "Phytotherapy is:", options: ["Surgery using plants", "Treatment using plant medicines", "Plant classification", "Plant breeding"], correct: 1 },
-      { question: "Natural product chemistry deals with:", options: ["Petroleum compounds", "Compounds from natural sources", "Synthetic compounds", "Metallic compounds"], correct: 1 },
-      { question: "The scope of pharmacognosy includes:", options: ["Only identification of drugs", "Identification, cultivation, extraction and quality control", "Drug manufacturing only", "Marketing of drugs"], correct: 1 },
-      { question: "Who is credited with founding the modern pharmaceutical sciences?", options: ["William C. Evans", "Peter J. S. Nigel", "Galen", "Avicenna"], correct: 0 },
-      { question: "Traditional medicine is recognized by:", options: ["Only WHO", "WHO and many governments", "No organization", "Only pharmaceutical companies"], correct: 1 },
-      { question: "The historical development of pharmacognosy began with:", options: ["Chemical synthesis", "Use of medicinal plants", "DNA technology", "Genetic engineering"], correct: 1 },
-      { question: "Which civilization used garlic medicinally?", options: ["Only Egyptians", "Egyptians, Greeks and Romans", "Only Greeks", "Only Chinese"], correct: 1 },
-      { question: "The Ebers Papyrus contains:", options: ["Surgical techniques", "Medicinal plant formulas", "Chemical reactions", "Astronomical data"], correct: 1 },
-      { question: "Avicenna wrote:", options: ["De Materia Medica", "The Canon of Medicine", "Herbarium", "Pharmakopoeia"], correct: 1 },
-      { question: "Which period saw the decline of herbal medicine in Europe?", options: ["Renaissance", "Middle Ages", "19th century", "21st century"], correct: 2 },
-      { question: "The revival of herbal medicine began in:", options: ["18th century", "19th century", "20th century", "21st century"], correct: 1 },
-      { question: "Modern pharmacognosy combines traditional knowledge with:", options: ["Only modern chemistry", "Analytical techniques and research", "Only marketing", "Manufacturing only"], correct: 1 },
-      { question: "WHO Traditional Medicine Strategy focuses on:", options: ["Replacing modern medicine", "Integration and quality assurance", "Banning traditional medicine", "Patent rights only"], correct: 1 },
-      { question: "Pharmacognosy education includes:", options: ["Only botany", "Botany, chemistry, pharmacology and quality control", "Only chemistry", "Business management"], correct: 1 },
-      { question: "Drugs from natural sources are preferred because:", options: ["Always safer", "Often have fewer side effects", "Always cheaper", "Never interact with other drugs"], correct: 1 },
-      { question: "The future of pharmacognosy involves:", options: ["Declining importance", "Drug discovery from biodiversity", "Only quality control", "Replacing all medicine"], correct: 1 },
-      { question: "Herbal drugs can interact with:", options: ["No modern drugs", "Prescription and over-the-counter drugs", "Only vitamins", "Only supplements"], correct: 1 },
-      { question: "Standardization of herbal drugs is important for:", options: ["Making them expensive", "Ensuring consistent efficacy and safety", "Patent purposes", "Marketing only"], correct: 1 },
-      { question: "Good Agricultural Practice (GAP) ensures:", options: ["Maximum profit", "Quality and safety of medicinal plants", "Faster growth", "Larger harvest"], correct: 1 },
-      { question: "Post-harvest processing affects:", options: ["Only appearance", "Drug quality and potency", "Only color", "Only weight"], correct: 1 },
-      { question: "Storage conditions for crude drugs should:", options: ["Be humid", "Control temperature and moisture", "Be in bright light", "Be at room temperature always"], correct: 1 },
-      { question: "Drug adulteration in history was primarily for:", options: ["Safety", "Profit", "Quality", "Research"], correct: 1 },
-      { question: "The Renaissance period contributed to pharmacognosy through:", options: ["Decline of botany", "Discovery of new plants from the Americas", "Elimination of herbal medicine", "Chemical synthesis"], correct: 1 },
-      { question: "Linnaeus contributed to pharmacognosy by:", options: ["Synthesizing compounds", "Developing plant classification", "Manufacturing drugs", "Marketing herbs"], correct: 1 },
-      { question: "The 19th century advances in chemistry led to:", options: ["Decline of pharmacognosy", "Isolation of active compounds from plants", "End of herbal medicine", "Elimination of natural products"], correct: 1 },
-      { question: "Morphine was isolated from opium in:", options: ["17th century", "18th century", "19th century", "20th century"], correct: 2 },
-      { question: "Quinine was isolated from cinchona in:", options: ["17th century", "18th century", "19th century", "20th century"], correct: 2 },
-      { question: "The discovery of penicillin influenced pharmacognosy by:", options: ["Focusing on natural antibiotics", "Eliminating plant research", "Replacing natural products", "Reducing drug discovery"], correct: 0 },
-      { question: "Reverse pharmacology in drug discovery uses:", options: ["Only synthetic compounds", "Traditional knowledge as starting point", "Only clinical trials", "Manufacturing processes"], correct: 1 },
-      { question: "Biodiversity provides potential for:", options: ["Less drug discovery", "New drug leads", "Reduced research", "Fewer compounds"], correct: 1 },
-      { question: "Conservation of medicinal plants is important because:", options: ["They have no economic value", "Many are endangered and valuable sources", "They grow easily", "They are not useful"], correct: 1 },
-      { question: "Sustainable harvesting ensures:", options: ["Maximum short-term profit", "Long-term availability of plant resources", "Faster regrowth", "Lower costs"], correct: 1 },
-      { question: "The global market for herbal medicines is:", options: ["Declining", "Growing steadily", "Non-existent", "Stable"], correct: 1 },
-    ];
-    return q[i % q.length];
-  }),
+const quizData: Record<string, { question: string; options: string[]; correct: number }[]> = {
+  ch1: [
+    { question: "Who is known as the father of modern Pharmacognosy?", options: ["Johann Christian Stark", "Karl P. Wright", "William C. Evans", "Varro E. Tyler"], correct: 0 },
+    { question: "Pharmacognosy is the study of:", options: ["Synthetic drugs", "Natural drugs from plants, animals and minerals", "Only pharmaceutical formulations", "Drug manufacturing processes"], correct: 1 },
+    { question: "Which ancient civilization first used herbal medicines systematically?", options: ["Greek", "Roman", "Egyptians and Mesopotamians", "Chinese only"], correct: 2 },
+    { question: "The term 'Pharmacognosy' was first used by:", options: ["Seydler", "Dioscorides", "Hippocrates", "Galan"], correct: 0 },
+    { question: "Who wrote 'De Materia Medica'?", options: ["Hippocrates", "Dioscorides", "Galen", "Avicenna"], correct: 1 },
+    { question: "The main sources of natural drugs include:", options: ["Only plants", "Plants, animals and minerals", "Only synthetic compounds", "Only minerals"], correct: 1 },
+    { question: "Crude drugs are:", options: ["Pure chemical compounds", "Raw natural materials", "Finished formulations", "Synthetic medicines"], correct: 1 },
+    { question: "Pharmacognosy deals with:", options: ["Drug design", "Identification, cultivation and preparation of natural drugs", "Drug marketing", "Clinical trials"], correct: 1 },
+    { question: "Which Greek physician is known as father of medicine?", options: ["Aristotle", "Hippocrates", "Socrates", "Plato"], correct: 1 },
+    { question: "Egypt contributed significantly to pharmacognosy through:", options: ["Development of synthetics", "Papyrus Ebers", "DNA technology", "Modern chromatography"], correct: 1 },
+    { question: "Ethnobotany is the study of:", options: ["Drug synthesis", "Relationship between plants and humans", "Plant genetics", "Plant pathology"], correct: 1 },
+    { question: "Ethnopharmacology studies:", options: ["Animal drugs only", "Traditional medicine systems", "Synthetic drugs", "Drug pricing"], correct: 1 },
+    { question: "Which is NOT a traditional system of medicine?", options: ["Ayurveda", "Unani", "Allopathy", "Homeopathy"], correct: 2 },
+    { question: "Ayurveda originated in:", options: ["Greece", "India", "China", "Persia"], correct: 1 },
+    { question: "The Unani system originated in:", options: ["India", "Greece", "China", "Egypt"], correct: 1 },
+    { question: "Pharmacognosy differs from pharmacology in that it studies:", options: ["Drug toxicity only", "Natural drug sources and characteristics", "Drug metabolism", "Drug synthesis"], correct: 1 },
+    { question: "Primary metabolites in plants include:", options: ["Alkaloids", "Carbohydrates, proteins and lipids", "Terpenes", "Phenolics"], correct: 1 },
+    { question: "Secondary metabolites in plants include:", options: ["Glucose", "Alkaloids and terpenes", "Amino acids", "Fatty acids"], correct: 1 },
+    { question: "Phytotherapy is:", options: ["Surgery using plants", "Treatment using plant medicines", "Plant classification", "Plant breeding"], correct: 1 },
+    { question: "Natural product chemistry deals with:", options: ["Petroleum compounds", "Compounds from natural sources", "Synthetic compounds", "Metallic compounds"], correct: 1 },
+    { question: "The scope of pharmacognosy includes:", options: ["Only identification of drugs", "Identification, cultivation, extraction and quality control", "Drug manufacturing only", "Marketing of drugs"], correct: 1 },
+    { question: "Who is credited with founding the modern pharmaceutical sciences?", options: ["William C. Evans", "Peter J. S. Nigel", "Galen", "Avicenna"], correct: 0 },
+    { question: "Traditional medicine is recognized by:", options: ["Only WHO", "WHO and many governments", "No organization", "Only pharmaceutical companies"], correct: 1 },
+    { question: "The historical development of pharmacognosy began with:", options: ["Chemical synthesis", "Use of medicinal plants", "DNA technology", "Genetic engineering"], correct: 1 },
+    { question: "Which civilization used garlic medicinally?", options: ["Only Egyptians", "Egyptians, Greeks and Romans", "Only Greeks", "Only Chinese"], correct: 1 },
+    { question: "The Ebers Papyrus contains:", options: ["Surgical techniques", "Medicinal plant formulas", "Chemical reactions", "Astronomical data"], correct: 1 },
+    { question: "Avicenna wrote:", options: ["De Materia Medica", "The Canon of Medicine", "Herbarium", "Pharmakopoeia"], correct: 1 },
+    { question: "Which period saw the decline of herbal medicine in Europe?", options: ["Renaissance", "Middle Ages", "19th century", "21st century"], correct: 2 },
+    { question: "The revival of herbal medicine began in:", options: ["18th century", "19th century", "20th century", "21st century"], correct: 1 },
+    { question: "Modern pharmacognosy combines traditional knowledge with:", options: ["Only modern chemistry", "Analytical techniques and research", "Only marketing", "Manufacturing only"], correct: 1 },
+    { question: "WHO Traditional Medicine Strategy focuses on:", options: ["Replacing modern medicine", "Integration and quality assurance", "Banning traditional medicine", "Patent rights only"], correct: 1 },
+    { question: "Pharmacognosy education includes:", options: ["Only botany", "Botany, chemistry, pharmacology and quality control", "Only chemistry", "Business management"], correct: 1 },
+    { question: "Drugs from natural sources are preferred because:", options: ["Always safer", "Often have fewer side effects", "Always cheaper", "Never interact with other drugs"], correct: 1 },
+    { question: "The future of pharmacognosy involves:", options: ["Declining importance", "Drug discovery from biodiversity", "Only quality control", "Replacing all medicine"], correct: 1 },
+    { question: "Herbal drugs can interact with:", options: ["No modern drugs", "Prescription and over-the-counter drugs", "Only vitamins", "Only supplements"], correct: 1 },
+    { question: "Standardization of herbal drugs is important for:", options: ["Making them expensive", "Ensuring consistent efficacy and safety", "Patent purposes", "Marketing only"], correct: 1 },
+    { question: "Good Agricultural Practice (GAP) ensures:", options: ["Maximum profit", "Quality and safety of medicinal plants", "Faster growth", "Larger harvest"], correct: 1 },
+    { question: "Post-harvest processing affects:", options: ["Only appearance", "Drug quality and potency", "Only color", "Only weight"], correct: 1 },
+    { question: "Storage conditions for crude drugs should:", options: ["Be humid", "Control temperature and moisture", "Be in bright light", "Be at room temperature always"], correct: 1 },
+    { question: "Drug adulteration in history was primarily for:", options: ["Safety", "Profit", "Quality", "Research"], correct: 1 },
+    { question: "The Renaissance period contributed to pharmacognosy through:", options: ["Decline of botany", "Discovery of new plants from the Americas", "Elimination of herbal medicine", "Chemical synthesis"], correct: 1 },
+    { question: "Linnaeus contributed to pharmacognosy by:", options: ["Synthesizing compounds", "Developing plant classification", "Manufacturing drugs", "Marketing herbs"], correct: 1 },
+    { question: "The 19th century advances in chemistry led to:", options: ["Decline of pharmacognosy", "Isolation of active compounds from plants", "End of herbal medicine", "Elimination of natural products"], correct: 1 },
+    { question: "Morphine was isolated from opium in:", options: ["17th century", "18th century", "19th century", "20th century"], correct: 2 },
+    { question: "Quinine was isolated from cinchona in:", options: ["17th century", "18th century", "19th century", "20th century"], correct: 2 },
+    { question: "The discovery of penicillin influenced pharmacognosy by:", options: ["Focusing on natural antibiotics", "Eliminating plant research", "Replacing natural products", "Reducing drug discovery"], correct: 0 },
+    { question: "Reverse pharmacology in drug discovery uses:", options: ["Only synthetic compounds", "Traditional knowledge as starting point", "Only clinical trials", "Manufacturing processes"], correct: 1 },
+    { question: "Biodiversity provides potential for:", options: ["Less drug discovery", "New drug leads", "Reduced research", "Fewer compounds"], correct: 1 },
+    { question: "Conservation of medicinal plants is important because:", options: ["They have no economic value", "Many are endangered and valuable sources", "They grow easily", "They are not useful"], correct: 1 },
+    { question: "Sustainable harvesting ensures:", options: ["Maximum short-term profit", "Long-term availability of plant resources", "Faster regrowth", "Lower costs"], correct: 1 },
+    { question: "The global market for herbal medicines is:", options: ["Declining", "Growing steadily", "Non-existent", "Stable"], correct: 1 },
+  ],
   ch2: [
     { question: "Ayurveda emphasizes balance of:", options: ["Four humors", "Three doshas", "Five elements only", "Two energies"], correct: 1 },
     { question: "The three doshas in Ayurveda are:", options: ["Vata, Pitta, Kapha", "Kapha, Vata, Pitta", "Pitta, Kapha, Vata", "All of the above"], correct: 0 },
@@ -151,7 +148,7 @@ const quizzes: Record<string, { question: string; options: string[]; correct: nu
     { question: "Training for traditional medicine practitioners:", options: ["Is standardized globally", "Varies by country and system", "Does not exist", "Is the same as conventional doctors"], correct: 1 },
     { question: "Traditional medicine can work alongside conventional medicine through:", options: ["Competition", "Integrated healthcare approaches", "Replacing one with the other", "Avoiding patient choice"], correct: 1 },
     { question: "The economic value of traditional medicine is:", options: ["Negligible", "Significant and growing", "Declining rapidly", "Non-measurable"], correct: 1 },
-    { question: "Bi-piracy refers to:", options: ["Legal use of traditional knowledge", "Unauthorized patenting of traditional knowledge", "Sharing of medicine", "Cooperation between countries"], correct: 1 },
+    { question: "Biopiracy refers to:", options: ["Legal use of traditional knowledge", "Unauthorized patenting of traditional knowledge", "Sharing of medicine", "Cooperation between countries"], correct: 1 },
     { question: "Traditional knowledge digital library helps to:", options: ["Hide traditional knowledge", "Protect and share traditional knowledge ethically", "Prevent all use", "Replace traditional healers"], correct: 1 },
     { question: "The future relationship between traditional and modern medicine is likely to be:", options: ["One replacing the other", "More integrative", "Increasingly separate", "Of no relevance"], correct: 1 },
   ],
@@ -190,7 +187,7 @@ const quizzes: Record<string, { question: string; options: string[]; correct: nu
     { question: "Vitamins from natural sources include:", options: ["Only vitamin C", "Vitamins A, D, E and K", "Only B vitamins", "All are synthetic"], correct: 1 },
     { question: "Enzymes as drugs are:", options: ["Carbohydrates", "Proteins", "Lipids", "Vitamins"], correct: 1 },
     { question: "Antibiotics from natural sources include:", options: ["Only synthetic", "Penicillin, tetracycline and streptomycin", "Only sulfa drugs", "All are synthetic"], correct: 1 },
-    { question: "The combined classification system uses:", options: ["Only chemical nature", "Multiple approaches for better identification", "Only alphabetical order", "Only therapeutic use"], correct: 1 },
+    { question: "The combined classification system uses:", options: ["Only chemical nature", "Multiple approaches for better identification", "Only alphabetical", "Only therapeutic use"], correct: 1 },
     { question: "Which classification is most useful for drug identification?", options: ["Alphabetical", "Chemical", "All have value", "Therapeutic"], correct: 2 },
     { question: "Modern drug classification increasingly uses:", options: ["Only morphology", "Chemical constituents and pharmacological action", "Only alphabetical", "Only therapeutic use"], correct: 1 },
     { question: "The advantage of pharmacological classification is:", options: ["Easy identification", "Relates to clinical use", "Based on structure", "Based on source"], correct: 1 },
@@ -313,17 +310,17 @@ const quizzes: Record<string, { question: string; options: string[]; correct: nu
 };
 
 const getQuestionsForChapter = (chapterId: string): { question: string; options: string[]; correct: number }[] => {
-  const chapterQuestions = quizzes[chapterId] || [];
+  const chapterQuestions = quizData[chapterId] || [];
+  if (chapterQuestions.length === 0) {
+    return [{ question: "No questions available for this chapter", options: ["N/A", "N/A", "N/A", "N/A"], correct: 0 }];
+  }
   if (chapterQuestions.length >= 50) return chapterQuestions.slice(0, 50);
   
   const allQuestions = [...chapterQuestions];
   while (allQuestions.length < 50) {
     const baseIndex = allQuestions.length % chapterQuestions.length;
     const baseQuestion = chapterQuestions[baseIndex];
-    allQuestions.push({
-      ...baseQuestion,
-      question: `${baseQuestion.question} (Part ${Math.floor(allQuestions.length / chapterQuestions.length) + 1})`,
-    });
+    allQuestions.push({ ...baseQuestion });
   }
   return allQuestions.slice(0, 50);
 };
