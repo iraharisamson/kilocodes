@@ -37,6 +37,15 @@ const chapters: Chapter[] = [
   { id: "ch34", title: "Hallucinogenic Plants", desc: "Psychoactive flora", icon: "🍄", phase: "I" },
 ];
 
+const phaseColors: Record<string, string> = {
+  A: "from-blue-500 to-cyan-500",
+  B: "from-green-500 to-emerald-500",
+  C: "from-orange-500 to-amber-500",
+  D: "from-purple-500 to-violet-500",
+  F: "from-red-500 to-rose-500",
+  I: "from-pink-500 to-rose-400",
+};
+
 const generateQuestions = (chapterId: string): { id: number; question: string; options: string[]; correct: number }[] => {
   const questionTemplates: Record<string, string[]> = {
     ch1: [
@@ -477,6 +486,7 @@ export default function Home() {
   const [streak, setStreak] = useState(0);
   const [xp, setXp] = useState(0);
   const [completedChapters, setCompletedChapters] = useState<string[]>([]);
+  const [animated] = useState(true);
 
   const questions = currentChapter ? generateQuestions(currentChapter.id) : [];
   const question = questions[currentQuestion];
@@ -533,81 +543,100 @@ export default function Home() {
 
   const getOptionStyle = (index: number) => {
     if (!showFeedback) {
-      return selectedAnswer === index ? "border-[#58CC02] bg-[#D7F5D7]" : "border-[#E5E5E5] hover:border-[#58CC02]";
+      return selectedAnswer === index ? "border-[#58CC02] bg-[#D7F5D7] shadow-lg scale-[1.02]" : "border-[#E5E5E5] hover:border-[#58CC02] hover:shadow-md hover:scale-[1.01]";
     }
-    if (index === question.correct) return "border-[#58CC02] bg-[#D7F5D7]";
-    if (index === selectedAnswer && index !== question.correct) return "border-[#FF4B4B] bg-[#FFD6D6]";
+    if (index === question.correct) return "border-[#58CC02] bg-[#D7F5D7] shadow-lg";
+    if (index === selectedAnswer && index !== question.correct) return "border-[#FF4B4B] bg-[#FFD6D6] shadow-lg";
     return "border-[#E5E5E5] opacity-50";
   };
 
   if (state === "complete") {
     return (
-      <>
-        <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 p-4 flex justify-between items-center z-50">
-          <button onClick={handleBackToChapters} className="text-[#58CC02] font-bold">← Back</button>
-          <div className="flex gap-3.75">
-            <span style={{ color: "#FF9600" }}>🔥 {streak}</span>
-            <span style={{ color: "#58CC02" }}>⭐ {xp}</span>
-            <span style={{ color: "#FF4B4B" }}>❤️ {hearts}</span>
+      <div className="min-h-screen bg-gradient-to-br from-[#FFFEF5] via-[#FFF9E6] to-[#FFF3CC]">
+        <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-gray-200 p-4 flex justify-between items-center z-50 shadow-sm">
+          <button onClick={handleBackToChapters} className="text-[#58CC02] font-bold text-lg hover:scale-105 transition-transform">← Back</button>
+          <div className="flex gap-4">
+            <span className="flex items-center gap-1 text-lg font-semibold" style={{ color: "#FF9600" }}>🔥 {streak}</span>
+            <span className="flex items-center gap-1 text-lg font-semibold" style={{ color: "#58CC02" }}>⭐ {xp}</span>
+            <span className="flex items-center gap-1 text-lg font-semibold" style={{ color: "#FF4B4B" }}>❤️ {hearts}</span>
           </div>
         </header>
-        <main className="pt-28 px-5 max-w-[600px] mx-auto pb-8 flex flex-col items-center justify-center min-h-[80vh] text-center">
-          <div className="text-6xl mb-4">🎉</div>
-          <h1 className="text-[32px] text-[#3C3C3C] mb-2">Chapter Complete!</h1>
-          <p className="text-[#777] mb-6">You earned {questions.length * 10} XP</p>
+        <main className="pt-32 px-5 max-w-[600px] mx-auto pb-8 flex flex-col items-center justify-center min-h-[80vh] text-center">
+          <div className="animate-bounce text-8xl mb-6">🎉</div>
+          <div className="bg-white rounded-3xl p-8 shadow-2xl border-2 border-[#58CC02] mb-6 w-full">
+            <h1 className="text-4xl font-black text-[#3C3C3C] mb-4">Chapter Complete!</h1>
+            <p className="text-xl text-[#777] mb-6">You earned <span className="text-[#58CC02] font-bold">{questions.length * 10} XP</span></p>
+            <div className="flex justify-center gap-4 mb-4">
+              <div className="bg-gradient-to-r from-orange-400 to-orange-500 text-white rounded-xl px-4 py-2 flex items-center gap-2">
+                <span>🔥</span> <span className="font-bold">{streak}</span>
+              </div>
+              <div className="bg-gradient-to-r from-green-400 to-green-500 text-white rounded-xl px-4 py-2 flex items-center gap-2">
+                <span>⭐</span> <span className="font-bold">{xp}</span>
+              </div>
+            </div>
+          </div>
           <button
             onClick={handleBackToChapters}
-            className="bg-[#58CC02] text-white font-bold py-3 px-8 rounded-xl border-b-4 border-[#46A302] hover:bg-[#65Df0A] transition-colors"
+            className="bg-gradient-to-r from-[#58CC02] to-[#65DF0A] text-white font-bold py-4 px-12 rounded-2xl border-b-4 border-[#46A302] hover:border-b-0 hover:translate-y-1 transition-all shadow-xl"
           >
             Continue
           </button>
         </main>
-      </>
+      </div>
     );
   }
 
   if (state === "quiz" && currentChapter && question) {
     return (
-      <>
-        <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 p-4 flex justify-between items-center z-50">
-          <button onClick={handleBackToChapters} className="text-[#58CC02] font-bold">← Quit</button>
-          <div className="flex-1 mx-4 bg-[#E5E5E5] h-2 rounded-full overflow-hidden">
+      <div className="min-h-screen bg-gradient-to-br from-[#FFFEF5] via-[#FFF9E6] to-[#FFF3CC]">
+        <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-gray-200 p-4 flex justify-between items-center z-50 shadow-sm">
+          <button onClick={handleBackToChapters} className="text-[#58CC02] font-bold text-lg hover:scale-105 transition-transform">← Quit</button>
+          <div className="flex-1 mx-4 bg-gray-200 h-3 rounded-full overflow-hidden shadow-inner">
             <div
-              className="bg-[#58CC02] h-full transition-all"
+              className="bg-gradient-to-r from-[#58CC02] to-[#65DF0A] h-full transition-all duration-500 ease-out"
               style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
             />
           </div>
-          <div className="flex gap-3.75">
-            <span style={{ color: "#FF9600" }}>🔥 {streak}</span>
-            <span style={{ color: "#58CC02" }}>⭐ {xp}</span>
-            <span style={{ color: "#FF4B4B" }}>❤️ {hearts}</span>
+          <div className="flex gap-4">
+            <span className="flex items-center gap-1 text-lg font-semibold" style={{ color: "#FF9600" }}>🔥 {streak}</span>
+            <span className="flex items-center gap-1 text-lg font-semibold" style={{ color: "#58CC02" }}>⭐ {xp}</span>
+            <span className="flex items-center gap-1 text-lg font-semibold" style={{ color: "#FF4B4B" }}>❤️ {hearts}</span>
           </div>
         </header>
         <main className="pt-24 px-5 max-w-[600px] mx-auto pb-8">
-          <div className="mb-6">
-            <span className="text-[#777] text-sm">Question {currentQuestion + 1} of {questions.length}</span>
-            <h2 className="text-2xl text-[#3C3C3C] font-bold mt-1">{question.question}</h2>
+          <div className="bg-white rounded-3xl p-6 shadow-lg border-2 border-gray-100 mb-6">
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-[#777] text-sm font-medium">Question {currentQuestion + 1} of {questions.length}</span>
+              <span className="bg-gradient-to-r from-[#58CC02] to-[#65DF0A] text-white text-xs font-bold px-3 py-1 rounded-full">
+                {currentChapter.title}
+              </span>
+            </div>
+            <h2 className="text-2xl text-[#3C3C3C] font-bold leading-relaxed">{question.question}</h2>
           </div>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-4">
             {question.options.map((option, index) => (
               <button
                 key={index}
                 onClick={() => handleAnswer(index)}
                 disabled={showFeedback}
-                className={`border-2 border-[#E5E5E5] rounded-xl p-4 text-left transition-colors ${getOptionStyle(index)}`}
+                className={`border-2 rounded-2xl p-5 text-left transition-all duration-200 ${getOptionStyle(index)}`}
               >
-                <span className="font-bold mr-3">{String.fromCharCode(65 + index)}.</span>
-                {option}
+                <div className="flex items-center gap-4">
+                  <span className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center font-bold text-lg text-[#3C3C3C]">
+                    {String.fromCharCode(65 + index)}
+                  </span>
+                  <span className="text-lg font-medium text-[#3C3C3C]">{option}</span>
+                </div>
               </button>
             ))}
           </div>
           {showFeedback && (
-            <div className="mt-6">
-              <div className={`p-4 rounded-xl mb-4 ${selectedAnswer === question.correct ? "bg-[#D7F5D7] text-[#3C3C3C]" : "bg-[#FFD6D6] text-[#FF4B4B]"}`}>
-                <h3 className="font-bold text-lg">
-                  {selectedAnswer === question.correct ? "✅ Correct!" : "❌ Not quite!"}
+            <div className="mt-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
+              <div className={`p-5 rounded-2xl mb-4 shadow-lg ${selectedAnswer === question.correct ? "bg-gradient-to-r from-green-100 to-green-50 border-2 border-green-300" : "bg-gradient-to-r from-red-100 to-red-50 border-2 border-red-300"}`}>
+                <h3 className="font-black text-xl mb-2">
+                  {selectedAnswer === question.correct ? "🎉 Correct!" : "❌ Not quite!"}
                 </h3>
-                <p className="text-sm mt-1">
+                <p className="text-[#555]">
                   {selectedAnswer === question.correct
                     ? "Great job! Keep going!"
                     : `The correct answer is ${String.fromCharCode(65 + question.correct)}.`}
@@ -615,62 +644,80 @@ export default function Home() {
               </div>
               <button
                 onClick={handleNext}
-                className="w-full bg-[#58CC02] text-white font-bold py-3 rounded-xl border-b-4 border-[#46A302] hover:bg-[#65Df0A] transition-colors"
+                className="w-full bg-gradient-to-r from-[#58CC02] to-[#65DF0A] text-white font-bold py-4 rounded-2xl border-b-4 border-[#46A302] hover:border-b-0 hover:translate-y-1 transition-all shadow-xl text-lg"
               >
-                {currentQuestion < questions.length - 1 ? "Continue" : "Finish"}
+                {currentQuestion < questions.length - 1 ? "Continue →" : "Finish ✨"}
               </button>
             </div>
           )}
         </main>
-      </>
+      </div>
     );
   }
 
   return (
-    <>
-      <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 p-4 flex justify-between items-center z-50">
-        <div className="flex items-center gap-2.5">
-          <div className="w-10 h-10 bg-[#58CC02] rounded-xl flex items-center justify-center text-white font-bold">
+    <div className="min-h-screen bg-gradient-to-br from-[#FFFEF5] via-[#FFF9E6] to-[#FFF3CC]">
+      <header className="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md border-b border-gray-200 p-4 flex justify-between items-center z-50 shadow-lg">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 bg-gradient-to-br from-[#58CC02] to-[#46A302] rounded-2xl flex items-center justify-center text-white font-black text-xl shadow-md">
             P
           </div>
-          <span className="font-bold text-xl">PharmaQuest</span>
+          <span className="font-black text-2xl text-[#3C3C3C]">PharmaQuest</span>
         </div>
-        <div className="flex gap-3.75">
-          <span style={{ color: "#FF9600" }}>🔥 {streak}</span>
-          <span style={{ color: "#58CC02" }}>⭐ {xp}</span>
-          <span style={{ color: "#FF4B4B" }}>❤️ {hearts}</span>
+        <div className="flex gap-4">
+          <span className="flex items-center gap-1 text-lg font-bold" style={{ color: "#FF9600" }}>🔥 {streak}</span>
+          <span className="flex items-center gap-1 text-lg font-bold" style={{ color: "#58CC02" }}>⭐ {xp}</span>
+          <span className="flex items-center gap-1 text-lg font-bold" style={{ color: "#FF4B4B" }}>❤️ {hearts}</span>
         </div>
       </header>
       <main className="pt-28 px-5 max-w-[600px] mx-auto pb-8">
-        <h1 className="text-[32px] text-[#3C3C3C] text-center mb-2.5">Learn Pharmacognosy</h1>
-        <p className="text-center text-[#777] mb-7.5">Master the science of natural drugs</p>
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-black text-[#3C3C3C] mb-3">Learn Pharmacognosy</h1>
+          <p className="text-lg text-[#777]">Master the science of natural drugs</p>
+        </div>
         
-        {phases.map((phase) => (
-          <div key={phase} className="mb-6">
-            <h2 className="text-lg font-bold text-[#3C3C3C] mb-3">Part {phase}: {phaseNames[phase]}</h2>
+        {phases.map((phase, phaseIndex) => (
+          <div 
+            key={phase} 
+            className={`mb-8 transform transition-all duration-500 ${animated ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
+            style={{ transitionDelay: `${phaseIndex * 100}ms` }}
+          >
+            <div className={`flex items-center gap-3 mb-4`}>
+              <div className={`w-10 h-10 rounded-xl bg-gradient-to-r ${phaseColors[phase]} flex items-center justify-center text-white font-bold shadow-md`}>
+                {phase}
+              </div>
+              <h2 className="text-xl font-black text-[#3C3C3C]">Part {phase}: {phaseNames[phase]}</h2>
+            </div>
             <div className="flex flex-col gap-3">
               {chapters
                 .filter((ch) => ch.phase === phase)
-                .map((chapter) => (
+                .map((chapter, index) => (
                   <div
                     key={chapter.id}
                     onClick={() => handleChapterClick(chapter)}
-                    className="border-2 border-[#E5E5E5] rounded-2xl p-4 flex items-center gap-4 bg-white cursor-pointer transition-colors hover:border-[#58CC02]"
+                    className={`group bg-white rounded-2xl p-4 flex items-center gap-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-[1.02] border-2 border-transparent hover:border-[#58CC02] ${animated ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}
+                    style={{ transitionDelay: `${(phaseIndex * 100) + (index * 50)}ms` }}
                   >
-                    <div className="w-[60px] h-[60px] rounded-xl bg-[#D7F5D7] flex items-center justify-center text-[28px]">
+                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${phaseColors[phase]} flex items-center justify-center text-2xl shadow-md group-hover:scale-110 transition-transform`}>
                       {completedChapters.includes(chapter.id) ? "✅" : chapter.icon}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-base text-[#3C3C3C] font-semibold mb-1">{chapter.title}</h3>
+                      <h3 className="text-base font-bold text-[#3C3C3C] mb-1">{chapter.title}</h3>
                       <p className="text-sm text-[#777]">{chapter.desc}</p>
                     </div>
-                    <div className="text-[#58CC02] font-bold">→</div>
+                    <div className="w-10 h-10 rounded-xl bg-[#F0F0F0] flex items-center justify-center text-[#58CC02] font-bold group-hover:bg-[#58CC02] group-hover:text-white transition-all">
+                      →
+                    </div>
                   </div>
                 ))}
             </div>
           </div>
         ))}
+        
+        <div className="text-center mt-12 pb-8">
+          <p className="text-[#999] text-sm">📚 {chapters.length} Chapters • 💯 {chapters.length * 50} Questions</p>
+        </div>
       </main>
-    </>
+    </div>
   );
 }
