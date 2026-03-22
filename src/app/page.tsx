@@ -534,9 +534,12 @@ const quizData: Record<string, { question: string; options: string[]; correct: n
 };
 
 const getQuestionsForChapter = (chapterId: string): { question: string; options: string[]; correct: number }[] => {
-  const chapterQuestions = quizData[chapterId] || [];
+  let chapterQuestions = quizData[chapterId] || [];
   if (chapterQuestions.length === 0) {
-    return [{ question: "No questions available for this chapter", options: ["N/A", "N/A", "N/A", "N/A"], correct: 0 }];
+    chapterQuestions = quizData["ch15"] || [];
+  }
+  if (chapterQuestions.length === 0) {
+    return [{ question: "Coming soon - questions under development", options: ["A", "B", "C", "D"], correct: 0 }];
   }
   if (chapterQuestions.length >= 50) return chapterQuestions.slice(0, 50);
   
