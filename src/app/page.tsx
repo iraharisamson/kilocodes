@@ -10,6 +10,33 @@ interface Chapter {
   phase: string;
 }
 
+const chapterImages: Record<string, string> = {
+  ch1: "📜",
+  ch2: "🏥",
+  ch3: "📊",
+  ch4: "🌱",
+  ch10: "⚠️",
+  ch11: "🔬",
+  ch12: "🧪",
+  ch14: "🍬",
+  ch15: "⚗️",
+  ch16: "🍯",
+  ch17: "🌸",
+  ch18: "🫗",
+  ch19: "🧴",
+  ch20: "🍂",
+  ch21: "🔬",
+  ch22: "🩹",
+  ch23: "🪨",
+  ch24: "⚙️",
+  ch28: "🌊",
+  ch30: "🐛",
+  ch31: "☠️",
+  ch32: "🤧",
+  ch33: "🎨",
+  ch34: "🍄",
+};
+
 const chapters: Chapter[] = [
   { id: "ch1", title: "History, Definitions", desc: "Introduction to Pharmacognosy", icon: "📜", phase: "A" },
   { id: "ch2", title: "Alternative Systems of Medicine", desc: "Traditional medical systems", icon: "🏥", phase: "A" },
@@ -684,10 +711,15 @@ export default function Home() {
         <main className="pt-24 px-5 max-w-[600px] mx-auto pb-8">
           <div className="bg-white rounded-3xl p-6 shadow-lg border-2 border-gray-100 mb-6">
             <div className="flex items-center justify-between mb-4">
-              <span className="text-[#777] text-sm font-medium">Question {currentQuestion + 1} of {questions.length}</span>
-              <span className="bg-gradient-to-r from-[#58CC02] to-[#65DF0A] text-white text-xs font-bold px-3 py-1 rounded-full">
-                {currentChapter.title}
-              </span>
+              <div className="flex items-center gap-3">
+                <span className="text-4xl">{chapterImages[currentChapter?.id] || "📚"}</span>
+                <div>
+                  <span className="text-[#777] text-sm font-medium">Question {currentQuestion + 1} of {questions.length}</span>
+                  <span className="ml-3 bg-gradient-to-r from-[#58CC02] to-[#65DF0A] text-white text-xs font-bold px-3 py-1 rounded-full">
+                    {currentChapter?.title}
+                  </span>
+                </div>
+              </div>
             </div>
             <h2 className="text-2xl text-[#3C3C3C] font-bold leading-relaxed">{question.question}</h2>
           </div>
